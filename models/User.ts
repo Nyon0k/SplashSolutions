@@ -1,11 +1,18 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToMany, JoinColumn} from 'typeorm';
-
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne, ManyToMany, JoinColumn, JoinTable} from 'typeorm';
+import Product from './Product';
 @Entity('users')
 export default class User {
     @PrimaryGeneratedColumn('increment')
     id: number;
     @Column()
+    name: string;
+    @Column()
     cpf: number;
     @Column()
-    name: string;
+    email: string;
+    @Column()
+    password: string;
+    @ManyToMany(type => Product, product => product.users)
+    @JoinTable()
+    products: Product[];
 }
