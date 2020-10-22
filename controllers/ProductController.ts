@@ -56,7 +56,7 @@ export default {
         const data = {
             name,
             price,
-            record,
+            record
         };
 
         // const schema = Yup.object().shape({

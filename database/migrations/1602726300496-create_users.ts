@@ -20,7 +20,7 @@ export class createUsers1602726300496 implements MigrationInterface {
                 },
                 {
                     name: 'cpf',
-                    type: 'integer'
+                    type: 'varchar'
                 },
                 {
                     name: 'email',

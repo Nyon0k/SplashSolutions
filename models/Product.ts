@@ -19,11 +19,26 @@ export default class Product {
     @JoinColumn({name: 'record_id'})
     record: Record;
 
-    @ManyToOne(() => Store, store =>  store.products, {nullable: true})
+    @ManyToOne(() => Store, store =>  store.products)
     @JoinColumn({name: 'store_id'})
     store: Store;
 
-    @ManyToMany(type => User, user => user.products)
-    @JoinTable({name: 'user_products'})
-    users: User[];
+    // @ManyToMany(type => User, user => user.products,{
+    //     eager:true,
+    //     cascade: ['insert', 'update']
+    // })
+    // @JoinTable(
+    // //     {
+    // //     name: 'users_products',
+    // //     joinColumn: {
+    // //         name: 'user_id',
+    // //         referencedColumnName: 'id'
+    // //     },
+    // //     inverseJoinColumn: {
+    // //         name: 'product_id',
+    // //         referencedColumnName: 'id'
+    // //     }
+    // // }
+    // )
+    // users: User[];
 }
