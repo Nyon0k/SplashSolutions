@@ -1,9 +1,9 @@
 import {getRepository, getConnection} from 'typeorm';
 import User from '../models/User'; 
-import {Request, Response} from 'express';
+import {json, Request, Response} from 'express';
 import bcrypt from 'bcrypt';
 //import orphanageView from '../views/orphanages_view';
-//import * as Yup from 'yup'; 
+import * as Yup from 'yup'; 
 
 export default {
     async index(request: Request,response: Response){
@@ -44,24 +44,20 @@ export default {
 
     
 
-        // const schema = Yup.object().shape({
-        //     name: Yup.string().required(),
-        //     latitude: Yup.number().required(),
-        //     longitude: Yup.number().required(),
-        //     about: Yup.string().required().max(300),
-        //     instructions: Yup.string().required(),
-        //     opening_hours: Yup.string().required(),
-        //     open_on_weekends: Yup.boolean().required(),
-        //     images: Yup.array(
-        //         Yup.object().shape({
-        //         path: Yup.string().required()
-        //     })
-        //     )
-        // });
+        const schema = Yup.object().shape({
+            name: Yup.string().required(),
+            cpf: Yup.string().required().max(11),
+            email: Yup.string().required(),
+            password: Yup.string().required(),
+        });
+        try{
+            await schema.validate(data, {
+                abortEarly: false,
+            });
+        }catch(err){
+            return response.status(500).json(['Erro de validacao!']);
+        };
 
-        // await schema.validate(data, {
-        //     abortEarly: false
-        // });
 
         const user = usersRepository.create(data);    
         console.log(user);
