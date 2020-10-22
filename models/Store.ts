@@ -10,7 +10,7 @@ export default class Store {
     @Column()
     address: string;
     @Column()
-    cep: number;
+    cep: string;
     @Column()
     cnpj: string;
 

@@ -24,11 +24,11 @@ export class createStores1603219413344 implements MigrationInterface {
                 },
                 {
                     name: 'cep',
-                    type: 'integer'
+                    type: 'varchar'
                 },
                 {
                     name: 'cnpj',
-                    type: 'integer'
+                    type: 'varchar'
                 }
             ]
         }));

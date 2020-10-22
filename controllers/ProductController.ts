@@ -1,6 +1,8 @@
 import {getRepository, getConnection} from 'typeorm';
 import Product from '../models/Product'; 
 import {Request, Response} from 'express';
+import User_Product from '../models/User_Product';
+import User from '../models/User';
 //import orphanageView from '../views/orphanages_view';
 //import * as Yup from 'yup'; 
 
@@ -24,7 +26,8 @@ export default {
             price
         } = request.body;
         
-        const productsRepository = getRepository(Product);
+        // const productsRepository = getRepository(Product);
+        // const userRepository = getRepository(User);
         
         // const requestImages = request.files  as Express.Multer.File[];
         // const images = requestImages.map(image => {
@@ -37,50 +40,44 @@ export default {
             "phone": 238904791237
         }
         
-        const users = [
+        const userData = 
             {
                 name: "Carlos Eduardo",
                 cpf: "03716579203",
                 email: "Cadu@gmail.com",
                 password: "senha123"
-
-            },
-            {
-                name: "Roberson Freitas",
-                cpf: "01628016299",
-                email:  "robsonf@gmail.com",
-                password: "senha234"
             }
-        ]
-        const store = null;
+        
+        const store = {
+            "name": "Botafogo e Gelo",
+            "address": "Botafogo",
+            "cep": "22250040",
+            "cnpj": "12345678910"
+        };
+       
         const data = {
             name,
             price,
-            record
+            record,
+            store,
         };
 
-        // const schema = Yup.object().shape({
-        //     name: Yup.string().required(),
-        //     latitude: Yup.number().required(),
-        //     longitude: Yup.number().required(),
-        //     about: Yup.string().required().max(300),
-        //     instructions: Yup.string().required(),
-        //     opening_hours: Yup.string().required(),
-        //     open_on_weekends: Yup.boolean().required(),
-        //     images: Yup.array(
-        //         Yup.object().shape({
-        //         path: Yup.string().required()
-        //     })
-        //     )
-        // });
+        // const product = productsRepository.create(data);    
+        // const user = userRepository.create(userData);
+        
+        // await userRepository.save(user);
+        // await productsRepository.save(product);
 
-        // await schema.validate(data, {
-        //     abortEarly: false
-        // });
-        const product = productsRepository.create(data);    
-    
-        await productsRepository.save(product);
-        return response.status(201).json(product);
+        const userProdRepo = getRepository(User_Product);
+        const user = userData;
+        const product = data;
+        const userProdData = {
+            product,
+            user  
+        }
+        const userProd = userProdRepo.create(userProdData);
+        await userProdRepo.save(userProd);
+        return response.status(201).json(userProd);
     },
 
     async update(request: Request,response: Response){

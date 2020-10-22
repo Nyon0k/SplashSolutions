@@ -2,7 +2,7 @@ import {Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne, ManyToMany,
 import Record from './Record';
 import Store from './Store';
 import User from './User';
-
+import User_Product from './User_Product';
 @Entity('products')
 export default class Product {
     @PrimaryGeneratedColumn('increment')
@@ -19,9 +19,17 @@ export default class Product {
     @JoinColumn({name: 'record_id'})
     record: Record;
 
-    @ManyToOne(() => Store, store =>  store.products)
+    @ManyToOne(() => Store, store =>  store.products, {
+        cascade: ['insert', 'update']
+    })
     @JoinColumn({name: 'store_id'})
     store: Store;
+
+    @OneToMany(() => User_Product, user_product =>  user_product.product, {
+        cascade: ['insert','update'],
+    })
+    @JoinColumn({name: 'product_id'})
+    users: User_Product[];
 
     // @ManyToMany(type => User, user => user.products,{
     //     eager:true,
