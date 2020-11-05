@@ -1,4 +1,4 @@
-import {getRepository, getConnection} from 'typeorm';
+import {getRepository} from 'typeorm';
 import User from '../models/User'; 
 import {Request, Response} from 'express';
 import jwt from 'jsonwebtoken';

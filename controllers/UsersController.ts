@@ -2,6 +2,7 @@ import {getRepository, getConnection} from 'typeorm';
 import User from '../models/User'; 
 import {json, Request, Response} from 'express';
 import bcrypt from 'bcrypt';
+import * as nodemailer from 'nodemailer';
 //import orphanageView from '../views/orphanages_view';
 import * as Yup from 'yup'; 
 
@@ -58,10 +59,37 @@ export default {
             return response.status(500).json(['Erro de validacao!']);
         };
 
-
+        
         const user = usersRepository.create(data);    
         console.log(user);
         await usersRepository.save(user);
+
+        
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'rafael.martins@icomp.ufam.edu.br',
+                pass: '21852709'
+            }
+        });
+
+        const date = new Date();
+        var mailOptions = {
+            from: 'rafael.martins@icomp.ufam.edu.br',
+            to: user.email,
+            subject: 'Cadastro no SplashSolutions',
+            text: date.toString()
+        };
+
+        transporter.sendMail(mailOptions,function(error: any, info: any){
+            if(error){
+                console.log(error);
+            }else{
+                console.log('E-mail enviado: ' + info.response);
+            }
+
+        });
+
         return response.status(201).json(user);
     },
 

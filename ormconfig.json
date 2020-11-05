@@ -9,5 +9,7 @@
     ],
     "cli": {
         "migrationsDir": "./database/migrations"
-    }
+    },
+    "seeds": ["./database/seeds/*.seed.ts"],
+    "factories": ["./database/factories/*.factory.ts"]
 }   
