@@ -2,6 +2,8 @@ import {Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne, ManyToMany,
 import bcrypt from 'bcrypt';
 import Product from './Product';
 import User_Product from './User_Product';
+import Image from './Image';
+
 @Entity('users')
 export default class User {
     @PrimaryGeneratedColumn('increment')
@@ -20,6 +22,11 @@ export default class User {
     })
     @JoinColumn({name: 'product_id'})
     products: User_Product[];
+
+    @OneToMany(() => Image, image => image.user, {
+        cascade: ['insert', 'update']
+    })
+    images: Image[];
 
     @BeforeInsert()
     async hashPassword(){

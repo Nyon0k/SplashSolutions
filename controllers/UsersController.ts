@@ -3,7 +3,6 @@ import User from '../models/User';
 import {json, Request, Response} from 'express';
 import bcrypt from 'bcrypt';
 import * as nodemailer from 'nodemailer';
-//import orphanageView from '../views/orphanages_view';
 import * as Yup from 'yup'; 
 
 export default {
@@ -30,7 +29,8 @@ export default {
         
        
         const usersRepository = getRepository(User);
-
+        const requestImages = request.files as Express.Multer.File[];
+        const images = requestImages.map(image => {return {path:image.filename}});
         // const requestImages = request.files  as Express.Multer.File[];
         // const images = requestImages.map(image => {
         //     return {path: image.filename}
@@ -40,7 +40,8 @@ export default {
             name,
             cpf,
             email,
-            password
+            password,
+            images
         };
 
     

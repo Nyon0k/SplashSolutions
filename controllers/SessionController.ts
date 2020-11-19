@@ -2,7 +2,6 @@ import {getRepository} from 'typeorm';
 import User from '../models/User'; 
 import {Request, Response} from 'express';
 import jwt from 'jsonwebtoken';
-//import orphanageView from '../views/orphanages_view';
 //import * as Yup from 'yup'; 
 
 export default {

@@ -3,7 +3,6 @@ import Product from '../models/Product';
 import {Request, Response} from 'express';
 import User_Product from '../models/User_Product';
 import User from '../models/User';
-//import orphanageView from '../views/orphanages_view';
 //import * as Yup from 'yup'; 
 
 export default {
