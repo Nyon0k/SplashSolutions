@@ -2,9 +2,17 @@ import {getRepository} from 'typeorm';
 import User from '../models/User'; 
 import {Request, Response} from 'express';
 import jwt from 'jsonwebtoken';
-//import * as Yup from 'yup'; 
 
 export default {
+
+    /*
+    * @store
+    *
+    * Função para logar um usuário que já está cadastrado no banco. Gerando um token para ele.
+    * 
+    * @param {Request} -> email, senha
+    * @return {Response}
+    */
     async store(request: Request,response: Response){
         const {email, password} = request.body;
         const usersRepository = getRepository(User);

@@ -14,6 +14,7 @@ export default class Record {
     @Column()
     phone: number;
 
+    //Relacionamento One-to-One entre Record e Product.
     @OneToOne(type => Product, product => product.record)
     product: Product;
 }

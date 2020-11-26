@@ -1,15 +1,31 @@
 import {getRepository, getConnection} from 'typeorm';
 import Record from '../models/Record'; 
 import {Request, Response} from 'express';
-//import * as Yup from 'yup'; 
 
 export default {
+
+    /*
+    * @index
+    *
+    * Função que retorna a lista de todos os Records
+    * 
+    * @param {Request}
+    * @return {Response}
+    */
     async index(request: Request,response: Response){
         const recordsRepository = getRepository(Record);
         const records = await recordsRepository.find();
         return response.json(records);
     },
 
+    /*
+    * @show
+    *
+    * Retorna um Record
+    * 
+    * @param {Request} -> id
+    * @return {Response}
+    */
     async show(request: Request,response: Response){
         const {id} = request.params
         const recordsRepository = getRepository(Record);
@@ -17,6 +33,14 @@ export default {
         return response.json(record);
     },
 
+    /*
+    * @create
+    *
+    * Cria e retorna um Record
+    * 
+    * @param {Request} -> name, price
+    * @return {Response}
+    */
     async create(request: Request,response: Response){
         const {
             type,
@@ -26,41 +50,26 @@ export default {
     
         const recordsRepository = getRepository(Record);
 
-        // const requestImages = request.files  as Express.Multer.File[];
-        // const images = requestImages.map(image => {
-        //     return {path: image.filename}
-        // });
-
         const data = {
             type,
             amount_available,
             phone
         };
 
-        // const schema = Yup.object().shape({
-        //     name: Yup.string().required(),
-        //     latitude: Yup.number().required(),
-        //     longitude: Yup.number().required(),
-        //     about: Yup.string().required().max(300),
-        //     instructions: Yup.string().required(),
-        //     opening_hours: Yup.string().required(),
-        //     open_on_weekends: Yup.boolean().required(),
-        //     images: Yup.array(
-        //         Yup.object().shape({
-        //         path: Yup.string().required()
-        //     })
-        //     )
-        // });
-
-        // await schema.validate(data, {
-        //     abortEarly: false
-        // });
         const record = recordsRepository.create(data);    
     
         await recordsRepository.save(record);
         return response.status(201).json(record);
     },
 
+    /*
+    * @update
+    *
+    * Atualiza um Record
+    * 
+    * @param {Request} -> id, parametro que deseja alterar
+    * @return {Response}
+    */
     async update(request: Request,response: Response){
         const {id} = request.params;
         const {type, amount_available, phone} = request.body;
@@ -75,6 +84,14 @@ export default {
         return response.json({message: "Registro atualizado."});
     },
 
+    /*
+    * @destroy
+    *
+    * Deleta um Record
+    * 
+    * @param {Request} -> id
+    * @return {Response}
+    */
     async destroy(request: Request,response: Response){
         const {id} = request.params;
         const recordsRepository = getRepository(Record);

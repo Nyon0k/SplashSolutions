@@ -6,12 +6,29 @@ import * as nodemailer from 'nodemailer';
 import * as Yup from 'yup'; 
 
 export default {
+
+    /*
+    * @index
+    *
+    * Retorna a lista de todos os Users
+    * 
+    * @param {Request}
+    * @return {Response}
+    */
     async index(request: Request,response: Response){
         const usersRepository = getRepository(User);
         const users = await usersRepository.find();
         return response.json(users);
     },
 
+    /*
+    * @show
+    *
+    * Retorna um User
+    * 
+    * @param {Request} -> id
+    * @return {Response}
+    */
     async show(request: Request,response: Response){
         const {id} = request.params
         const usersRepository = getRepository(User);
@@ -19,6 +36,14 @@ export default {
         return response.json(user);
     },
 
+    /*
+    * @create
+    *
+    * Cria e retorna um User
+    * 
+    * @param {Request} -> name, price
+    * @return {Response}
+    */
     async create(request: Request,response: Response){
         const {
             name,
@@ -31,10 +56,6 @@ export default {
         const usersRepository = getRepository(User);
         const requestImages = request.files as Express.Multer.File[];
         const images = requestImages.map(image => {return {path:image.filename}});
-        // const requestImages = request.files  as Express.Multer.File[];
-        // const images = requestImages.map(image => {
-        //     return {path: image.filename}
-        // });
       
         const data = {
             name,
@@ -44,14 +65,13 @@ export default {
             images
         };
 
-    
-
         const schema = Yup.object().shape({
             name: Yup.string().required(),
             cpf: Yup.string().required().max(11),
             email: Yup.string().required(),
             password: Yup.string().required(),
         });
+
         try{
             await schema.validate(data, {
                 abortEarly: false,
@@ -94,6 +114,14 @@ export default {
         return response.status(201).json(user);
     },
 
+    /*
+    * @update
+    *
+    * Atualiza um User
+    * 
+    * @param {Request} -> id, parametro que deseja alterar
+    * @return {Response}
+    */
     async update(request: Request,response: Response){
         const {id} = request.body;
         console.log({body_id:id});
@@ -110,6 +138,14 @@ export default {
         return response.json({message: "UPDATEDOU"});
     },
 
+    /*
+    * @destroy
+    *
+    * Deleta um User
+    * 
+    * @param {Request} -> id
+    * @return {Response}
+    */
     async destroy(request: Request,response: Response){
         const {id} = request.params;
         const usersRepository = getRepository(User);

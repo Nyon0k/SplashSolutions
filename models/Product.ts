@@ -12,6 +12,7 @@ export default class Product {
     @Column()
     price: number;
 
+    //Relacionamento One-to-One entre Record e Product.
     @OneToOne(type => Record, record => record.product,{
         cascade: ['insert','update'],
         eager:true
@@ -19,12 +20,14 @@ export default class Product {
     @JoinColumn({name: 'record_id'})
     record: Record;
 
+    //Relacionamento One-to-Many entre Store e Product.
     @ManyToOne(() => Store, store =>  store.products, {
         cascade: ['insert', 'update']
     })
     @JoinColumn({name: 'store_id'})
     store: Store;
 
+    //Relacionamento One-to-Many entre a tabela pivot User_Product e Product.
     @OneToMany(() => User_Product, user_product =>  user_product.product, {
         cascade: ['insert','update'],
     })

@@ -17,17 +17,20 @@ export default class User {
     @Column()
     password: string;
 
+    //Relacionamento One-to-Many entre User e tabela pivot User_product.
     @OneToMany(() => User_Product, user_product =>  user_product.user, {
         cascade: ['insert','update'],
     })
     @JoinColumn({name: 'product_id'})
     products: User_Product[];
 
+    //Relacionamento One-to-Many entre User e Image
     @OneToMany(() => Image, image => image.user, {
         cascade: ['insert', 'update']
     })
     images: Image[];
 
+    //Antes de criar um User na tabela, encripta a senha que foi passada.
     @BeforeInsert()
     async hashPassword(){
         this.password = await bcrypt.hash(this.password, 10);

@@ -3,15 +3,31 @@ import Product from '../models/Product';
 import {Request, Response} from 'express';
 import User_Product from '../models/User_Product';
 import User from '../models/User';
-//import * as Yup from 'yup'; 
 
 export default {
+    
+    /*
+    * @index
+    *
+    * Função que retorna a lista de todos os Products
+    * 
+    * @param {Request}
+    * @return {Response}
+    */
     async index(request: Request,response: Response){
         const productsRepository = getRepository(Product);
         const products = await productsRepository.find();
         return response.json(products);
     },
 
+    /*
+    * @show
+    *
+    * Retorna um Product
+    * 
+    * @param {Request} -> id
+    * @return {Response}
+    */
     async show(request: Request,response: Response){
         const {id} = request.params
         const productsRepository = getRepository(Product);
@@ -19,6 +35,14 @@ export default {
         return response.json(product);
     },
 
+    /*
+    * @create
+    *
+    * Cria e retorna um Product
+    * 
+    * @param {Request} -> name, price
+    * @return {Response}
+    */
     async create(request: Request,response: Response){
         const {
             name,
@@ -79,6 +103,14 @@ export default {
         return response.status(201).json(userProd);
     },
 
+    /*
+    * @update
+    *
+    * Atualiza um Product
+    * 
+    * @param {Request} -> id, parametro que deseja alterar
+    * @return {Response}
+    */
     async update(request: Request,response: Response){
         const {id} = request.params;
         const {name, price} = request.body;
@@ -92,6 +124,14 @@ export default {
         return response.json(product);
     },
 
+    /*
+    * @destroy
+    *
+    * Deleta um Product
+    * 
+    * @param {Request} -> id
+    * @return {Response}
+    */
     async destroy(request: Request,response: Response){
         const {id} = request.params;
         const productsRepository = getRepository(Product);

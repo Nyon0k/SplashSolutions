@@ -1,6 +1,8 @@
 import {Request, Response, NextFunction} from 'express';
 import jwt from 'jsonwebtoken';
 import authConfig from '../config/authConfig';
+
+//Verifica se o token existe no banco de dados e se existir permite prosseguir para o método que foi chamado.
 export default function (request: Request, response: Response, next: NextFunction) {
     const authHeader = request.headers.authorization;
     if(!authHeader){

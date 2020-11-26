@@ -1,15 +1,31 @@
 import {getRepository, getConnection} from 'typeorm';
 import Store from '../models/Store'; 
 import {Request, Response} from 'express';
-//import * as Yup from 'yup'; 
 
 export default {
+
+    /*
+    * @index
+    *
+    * Retorna a lista de todos os Stores
+    * 
+    * @param {Request}
+    * @return {Response}
+    */
     async index(request: Request,response: Response){
         const storesRepository = getRepository(Store);
         const stores = await storesRepository.find();
         return response.json(stores);
     },
 
+    /*
+    * @show
+    *
+    * Retorna um Store
+    * 
+    * @param {Request} -> id
+    * @return {Response}
+    */
     async show(request: Request,response: Response){
         const {id} = request.params
         const storesRepository = getRepository(Store);
@@ -17,6 +33,14 @@ export default {
         return response.json(store);
     },
 
+    /*
+    * @create
+    *
+    * Cria e retorna um Store
+    * 
+    * @param {Request} -> name, price
+    * @return {Response}
+    */
     async create(request: Request,response: Response){
         const {
             name,
@@ -51,30 +75,20 @@ export default {
             products
         };
 
-        // const schema = Yup.object().shape({
-        //     name: Yup.string().required(),
-        //     latitude: Yup.number().required(),
-        //     longitude: Yup.number().required(),
-        //     about: Yup.string().required().max(300),
-        //     instructions: Yup.string().required(),
-        //     opening_hours: Yup.string().required(),
-        //     open_on_weekends: Yup.boolean().required(),
-        //     images: Yup.array(
-        //         Yup.object().shape({
-        //         path: Yup.string().required()
-        //     })
-        //     )
-        // });
-
-        // await schema.validate(data, {
-        //     abortEarly: false
-        // });
         const store = storesRepository.create(data);    
     
         await storesRepository.save(store);
         return response.status(201).json(store);
     },
 
+    /*
+    * @update
+    *
+    * Atualiza um Store
+    * 
+    * @param {Request} -> id, parametro que deseja alterar
+    * @return {Response}
+    */
     async update(request: Request,response: Response){
         const {id} = request.params;
         const {name, address, cep, cnpj} = request.body;
@@ -90,6 +104,14 @@ export default {
         return response.json(store);
     },
 
+    /*
+    * @destroy
+    *
+    * Deleta um Store
+    * 
+    * @param {Request} -> id
+    * @return {Response}
+    */
     async destroy(request: Request,response: Response){
         const {id} = request.params;
         const storesRepository = getRepository(Store);

@@ -14,11 +14,11 @@ export default class Store {
     @Column()
     cnpj: string;
 
+    //Relacionamento One-to-Many entre Store e Product.
     @OneToMany(() => Product, product =>  product.store, {
         cascade: ['insert','update'],
         eager: true
     })
-    
     @JoinColumn({name: 'store_id'})
     products: Product[];
 }

@@ -8,6 +8,7 @@ export default class Image {
     @Column()
     path: string;
 
+    //Relacionamento One-to-Many entre Image e User.
     @ManyToOne(() => User, user => user.images)
     @JoinColumn({name: 'user_id'})
     user: User;
