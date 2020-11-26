@@ -35,7 +35,7 @@ export default class User {
     async hashPassword(){
         this.password = await bcrypt.hash(this.password, 10);
     }
-
+    //compara a senha recebida com a senha do usuário atual na hora do login
     async comparePassword(attempt: string): Promise<boolean> {
         return await bcrypt.compare(attempt, this.password);
     }
