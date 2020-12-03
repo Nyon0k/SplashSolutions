@@ -1,0 +1,1 @@
+O Splash solutions é um pequeno projeto de back-end para uma aplicação de pedido e entrega de água e outros produtos, feito como treinamento na EJCM para explorar diferentes funcionalidades do Node.js como iniciativa para troca de stack.
