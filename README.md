@@ -9,3 +9,6 @@ npm run dev (para rodar o projeto)
 
 ### Obs
 As tabelas do BD implementam algumas funcionalidades diferentes entre si, adicionadas como exemplo para avaliar sua implementação usando o Node.js. A tabela de usuários (Users) por exemplo, possui um esquema de validação de campos.
+
+http://github.com - automatic!
+[GitHub](http://github.com)
